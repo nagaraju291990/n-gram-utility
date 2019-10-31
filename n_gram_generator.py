@@ -48,6 +48,10 @@ n_gram_frequency = Counter()
 
 for line in lines:
 
+	#remove punctuations
+	if(punc == "y"):
+		line = re.sub(r'[^\w\s]', '', line)
+
 	#normalize/clean text
 	line = line.lower()
 	line = re.sub(r'\u00A0'," ",line,flags=re.MULTILINE)
@@ -56,9 +60,7 @@ for line in lines:
 	line = re.sub(r' +', " ",line,flags=re.MULTILINE)
 	line = re.sub(r'\n',"", line, flags=re.MULTILINE)
 
-	#remove punctuations
-	if(punc == "y"):
-		line = re.sub(r'[^\w\s]', '', line)
+
 	
 	text = line.split(" ")
 	#print(line, len(text))

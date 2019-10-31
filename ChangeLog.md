@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2019-10-31
+### Fixed
+- Punctuations first deleted and then normalizing text
+
 ## [1.0.0] - 2019-10-30
 ### Added
 - First version of n gram generator with input file, no of grams and punctuations yes/no
