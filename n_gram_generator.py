@@ -5,6 +5,7 @@ import os
 import sys
 import string
 from collections import Counter
+#import string
 
 def find_n_gram(line, noOfGrams):
 	words = line.split(" ") 
@@ -13,7 +14,7 @@ def find_n_gram(line, noOfGrams):
 
 parser = ArgumentParser(description='Extract n grams from input file/directory \n\r'+
 						"How to Run?\n" +
-						"python3 " + sys.argv[0] + " -i=inputfie" + "-n=1|2|3|4|...."
+						"python3 " + sys.argv[0] + " -i=inputfie" + " -n=1|2|3|4|...."
 						)
 
 parser.add_argument("-i", "--input", dest="inputfile",
@@ -21,28 +22,46 @@ parser.add_argument("-i", "--input", dest="inputfile",
 parser.add_argument("-n", "--ngrams", dest="ngrams",
 					help="provide number of grams to be generated", required=True)
 parser.add_argument("-p", "--punc", dest="punc",
-					help="specify Y|y for yes or N|n for no for to include or exclude punctuations, default=yes", required=False)
+					help="specify Y|y for yes or N|n for no to include or exclude punctuations, default=yes", required=False)
+parser.add_argument("-f", "--func", dest="func",
+					help="specify Y|y for yes or N|n for no to include or exclude function words from fw.txt, default=yes", required=False)
 
 args = parser.parse_args()
 
 inputfile = args.inputfile
 noOfGrams = int(args.ngrams)
 punc = args.punc
+func = args.func
 
 if(punc == None):
 	punc = 'y'
 else:
 	punc = punc.lower()
 
-#print(punc)
-#exit()
+if(func == None):
+	func = 'n'
+else:
+	func = func.lower()
 
+#print(punc)
+#print(func)
 #print(inputfile)
 #print(noOfGrams)
+fw_dict = {}
+if(func == "y"):
+	fp = open("fw.txt", "r")
+	fws = fp.read().split("\n")
+	fp.close()
+	for fw in fws:
+		fw_dict[fw] = 1
 
-with open(inputfile, "r") as fp:
-	lines = fp.readlines()
 
+#with open(inputfile, "r", encoding='utf-8') as fp:
+	#lines = fp.readlines()
+
+fp2 = open(inputfile, "r",  encoding='utf-8')
+lines = fp2.read().split("\n")
+fp2.close()
 
 n_gram_frequency = Counter()
 
@@ -50,7 +69,11 @@ for line in lines:
 
 	#remove punctuations
 	if(punc == "y"):
-		line = re.sub(r'[^\w\s]', '', line)
+		#line = re.sub(u'[^\s\u0C00-\u0C7F]', '', line, flags=re.UNICODE)
+		#print(string.punctuation)
+		line = line.strip(string.punctuation)
+		line = re.sub(r'[!\"#$%&\'()*+,-\./:;<=>\?@\[\]\^_\`\{|\}\~]', '', line, flags=re.MULTILINE)
+		#line = re.sub(r'^\W+', '', line, flags=re.UNICODE)
 
 	#normalize/clean text
 	line = line.lower()
@@ -81,4 +104,14 @@ for line in lines:
 #print(n_gram_frequency)
 
 for grams, frequency in n_gram_frequency.most_common():#items():
-    print(grams, frequency, sep="\t")
+	if(func == "y"):
+		if(re.search(r'',grams,re.IGNORECASE)):
+			sgrams = grams.split()
+			flag = 0
+			for sgram in sgrams:
+				if(sgram in fw_dict):
+					flag = 1
+			if(flag == 0):
+				print(grams, frequency, sep="\t")
+	else:
+		print(grams, frequency, sep="\t")
