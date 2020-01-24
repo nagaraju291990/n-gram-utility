@@ -8,7 +8,7 @@ from collections import Counter
 #import string
 
 def find_n_gram(line, noOfGrams):
-	words = line.split(" ") 
+	words = line.split(" ")
 	for i, word in words:
 		print(i,counter)
 
@@ -72,7 +72,7 @@ for line in lines:
 		#line = re.sub(u'[^\s\u0C00-\u0C7F]', '', line, flags=re.UNICODE)
 		#print(string.punctuation)
 		line = line.strip(string.punctuation)
-		line = re.sub(r'[!\"#$%&\'()*+,-\./:;<=>\?@\[\]\^_\`\{|\}\~]', '', line, flags=re.MULTILINE)
+		line = re.sub(r'[!\"#$%&\'()*+,-\./:;<=>\?@\[\]\^_\`\{|\}\~]', ' ', line, flags=re.MULTILINE)
 		#line = re.sub(r'^\W+', '', line, flags=re.UNICODE)
 
 	#normalize/clean text
@@ -84,7 +84,7 @@ for line in lines:
 	line = re.sub(r'\n',"", line, flags=re.MULTILINE)
 
 
-	
+
 	text = line.split(" ")
 	#print(line, len(text))
 	j = 0
@@ -92,7 +92,7 @@ for line in lines:
 	for i in range(len(text)-noOfGrams+1):
 		ngram = ''
 		#print(text)
-		ngram = text[j:k] 
+		ngram = text[j:k]
 		k = k+1
 		j = j + 1
 		#print(i,k,j, ngram)
