@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.2] - 2019-11-03
 ### Updated
+- Normalization of single quote, double quote and hyphen characters.
+
+## [1.0.2] - 2019-11-03
+### Updated
 - Updated script to to generate frequency for unicode data. 
 - Punctuation list to be deleted given in the script
 

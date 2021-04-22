@@ -67,7 +67,18 @@ n_gram_frequency = Counter()
 
 for line in lines:
 
+
+	line = re.sub(r'\u00A0'," ",line, flags=re.MULTILINE)
+	line = re.sub(r'\u2018', "\'", line, flags=re.MULTILINE)
+	line = re.sub(r'\u2019', "\'", line, flags=re.MULTILINE)
+	line = re.sub(r'\u201C', "\"", line, flags=re.MULTILINE)
+	line = re.sub(r'\u201D', "\"", line, flags=re.MULTILINE)
+	line = re.sub(r'\u2013', "-", line, flags=re.MULTILINE)
+	line = re.sub(r'\u2014', "-", line, flags=re.MULTILINE)
+	line = re.sub(r'\ufeff', " ", line, flags=re.MULTILINE)
+
 	#remove punctuations
+
 	if(punc == "y"):
 		#line = re.sub(u'[^\s\u0C00-\u0C7F]', '', line, flags=re.UNICODE)
 		#print(string.punctuation)
@@ -77,7 +88,6 @@ for line in lines:
 
 	#normalize/clean text
 	line = line.lower()
-	line = re.sub(r'\u00A0'," ",line,flags=re.MULTILINE)
 	line = re.sub(r'^ *',"",line,flags=re.MULTILINE)
 	line = re.sub(r' *$',"",line,flags=re.MULTILINE)
 	line = re.sub(r' +', " ",line,flags=re.MULTILINE)
