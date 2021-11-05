@@ -22,9 +22,9 @@ parser.add_argument("-i", "--input", dest="inputfile",
 parser.add_argument("-n", "--ngrams", dest="ngrams",
 					help="provide number of grams to be generated", required=True)
 parser.add_argument("-p", "--punc", dest="punc",
-					help="specify Y|y for yes or N|n for no to include or exclude punctuations, default=yes", required=False)
+					help="specify Y|y for yes to exclude punctuation or N|n for no to include punctuation, default=yes", required=False)
 parser.add_argument("-f", "--func", dest="func",
-					help="specify Y|y for yes or N|n for no to include or exclude function words from fw.txt, default=yes", required=False)
+					help="specify Y|y for yes to exclude function words or N|n for no to include function words from fw.txt, default=yes", required=False)
 
 args = parser.parse_args()
 
@@ -84,6 +84,7 @@ for line in lines:
 		#print(string.punctuation)
 		line = line.strip(string.punctuation)
 		line = re.sub(r'[!\"#$%&\'()*+,-\./:;<=>\?@\[\]\^_\`\{|\}\~]', ' ', line, flags=re.MULTILINE)
+		line = re.sub(r'[\u06D4\u061F\u060C]', ' ', line, flags=re.MULTILINE)
 		#line = re.sub(r'^\W+', '', line, flags=re.UNICODE)
 
 	#normalize/clean text
