@@ -87,7 +87,7 @@ for line in lines:
 		#line = re.sub(r'^\W+', '', line, flags=re.UNICODE)
 
 	#normalize/clean text
-	line = line.lower()
+	#line = line.lower()
 	line = re.sub(r'^ *',"",line,flags=re.MULTILINE)
 	line = re.sub(r' *$',"",line,flags=re.MULTILINE)
 	line = re.sub(r' +', " ",line,flags=re.MULTILINE)
